@@ -1,6 +1,6 @@
 package lesson10.abstractExample;
 
-public class OracleDbProvider extends DbProvider {
+public class PostgreSQLDbProvider extends DbProvider {
 
     void connectToDb(){
 
@@ -9,6 +9,4 @@ public class OracleDbProvider extends DbProvider {
     void disconnectFromDb(){
 
     }
-
-
 }
