@@ -16,12 +16,14 @@ public class ElectronicsOrder extends Order {
 
         if (getShipFromCity() == "Киев" || getShipFromCity() == "Oдесса" || getShipFromCity() == "Днепр" || getShipFromCity() == "Харьков"){
             if (getShipToCity() == "Киев" || getShipToCity() == "Oдесса" || getShipToCity() == "Днепр" || getShipToCity() == "Харьков"){
-                if (getBasePrice() >= 100 && getCustomerOwned().getGender() == "женский"){
+                if (getBasePrice() >= 100 && getCustomerOwned().getGender() == "Женский"){
                     setDateConfirmed(new Date());
                 }
             }
         }
     }
+
+
 
     @Override
     public void calculatePrice() {
