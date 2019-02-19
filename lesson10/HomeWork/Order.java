@@ -28,10 +28,9 @@ public abstract class Order {
     public abstract void calculatePrice();
 
 
+    public void confirmShipping() {
 
-    public void confirmShipping(){
-
-        if (dateShipped == null){
+        if (dateShipped == null) {
             dateShipped = new Date();
         }
     }

@@ -14,15 +14,14 @@ public class ElectronicsOrder extends Order {
     @Override
     public void validateOrder() {
 
-        if (getShipFromCity() == "Киев" || getShipFromCity() == "Oдесса" || getShipFromCity() == "Днепр" || getShipFromCity() == "Харьков"){
-            if (getShipToCity() == "Киев" || getShipToCity() == "Oдесса" || getShipToCity() == "Днепр" || getShipToCity() == "Харьков"){
-                if (getBasePrice() >= 100 && getCustomerOwned().getGender() == "Женский"){
+        if (getShipFromCity() == "Киев" || getShipFromCity() == "Oдесса" || getShipFromCity() == "Днепр" || getShipFromCity() == "Харьков") {
+            if (getShipToCity() == "Киев" || getShipToCity() == "Oдесса" || getShipToCity() == "Днепр" || getShipToCity() == "Харьков") {
+                if (getBasePrice() >= 100 && getCustomerOwned().getGender() == "Женский") {
                     setDateConfirmed(new Date());
                 }
             }
         }
     }
-
 
 
     @Override

@@ -15,9 +15,9 @@ public class FurnitureOrder extends Order {
     @Override
     public void validateOrder() {
 
-        if (getShipFromCity() == "Киев" || getShipFromCity() == "Львов"){
-            if (getShipToCity() == "Киев" || getShipToCity() == "Oдесса" || getShipToCity() == "Днепр" || getShipToCity() == "Харьков"){
-                if (getBasePrice() >= 500 && getCustomerOwned().getName() != "Тест"){
+        if (getShipFromCity() == "Киев" || getShipFromCity() == "Львов") {
+            if (getShipToCity() == "Киев" || getShipToCity() == "Oдесса" || getShipToCity() == "Днепр" || getShipToCity() == "Харьков") {
+                if (getBasePrice() >= 500 && getCustomerOwned().getName() != "Тест") {
                     setDateConfirmed(new Date());
                 }
             }
@@ -27,7 +27,7 @@ public class FurnitureOrder extends Order {
     @Override
     public void calculatePrice() {
         if (getBasePrice() > 5000)
-            setTotalPrice(getBasePrice() +  (getBasePrice() / 100 * 2));
+            setTotalPrice(getBasePrice() + (getBasePrice() / 100 * 2));
         else
             setTotalPrice(getBasePrice() + (getBasePrice() / 100 * 5));
     }
