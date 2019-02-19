@@ -13,7 +13,7 @@ public class FurnitureOrder extends Order {
 
 
     @Override
-    void validateOrder() {
+    public void validateOrder() {
 
         if (getShipFromCity() == "Киев" || getShipFromCity() == "Львов"){
             if (getShipToCity() == "Киев" || getShipToCity() == "Oдесса" || getShipToCity() == "Днепр" || getShipToCity() == "Харьков"){
@@ -25,7 +25,7 @@ public class FurnitureOrder extends Order {
     }
 
     @Override
-    void calculatePrice() {
+    public void calculatePrice() {
         if (getBasePrice() > 5000)
             setTotalPrice(getBasePrice() +  (getBasePrice() / 100 * 2));
         else

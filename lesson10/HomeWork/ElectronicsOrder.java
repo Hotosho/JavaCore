@@ -4,16 +4,15 @@ import java.util.Date;
 
 public class ElectronicsOrder extends Order {
 
-    private int guaranteeMoths;
+    private int guaranteeMonths;
 
-    public ElectronicsOrder(String itemName, Date dateCreated, String shipFromCity, String shipToCity, int basePrice, Customer customerOwned, int guaranteeMoths) {
+    public ElectronicsOrder(String itemName, Date dateCreated, String shipFromCity, String shipToCity, int basePrice, Customer customerOwned, int guaranteeMonths) {
         super(itemName, dateCreated, shipFromCity, shipToCity, basePrice, customerOwned);
-        this.guaranteeMoths = guaranteeMoths;
+        this.guaranteeMonths = guaranteeMonths;
     }
 
-
     @Override
-    void validateOrder() {
+    public void validateOrder() {
 
         if (getShipFromCity() == "Киев" || getShipFromCity() == "Oдесса" || getShipFromCity() == "Днепр" || getShipFromCity() == "Харьков"){
             if (getShipToCity() == "Киев" || getShipToCity() == "Oдесса" || getShipToCity() == "Днепр" || getShipToCity() == "Харьков"){
@@ -25,7 +24,7 @@ public class ElectronicsOrder extends Order {
     }
 
     @Override
-    void calculatePrice() {
+    public void calculatePrice() {
 
         if (getShipFromCity() == "Киев" || getShipFromCity() == "Oдесса")
             setTotalPrice(getBasePrice() + getBasePrice() * 0.1);

@@ -23,13 +23,11 @@ public abstract class Order {
         this.customerOwned = customerOwned;
     }
 
-    void validateOrder(){
+    public abstract void validateOrder();
 
-    }
+    public abstract void calculatePrice();
 
-    void calculatePrice(){
 
-    }
 
     void confirmShipping(){
 
