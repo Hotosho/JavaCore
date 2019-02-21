@@ -2,13 +2,22 @@ package lesson10.abstractExample;
 
 public class OracleDbProvider extends DbProvider {
 
-    void connectToDb(){
+    public OracleDbProvider(String dbHost) {
+        super(dbHost);
+    }
+
+    @Override
+    void connectToDb() {
 
     }
 
-    void disconnectFromDb(){
+    @Override
+    void disconnectFromDb() {
 
     }
 
-
+    @Override
+    void printDbHost() {
+        super.printDbHost();
+    }
 }
