@@ -13,6 +13,7 @@ public class GoogleAPI implements API {
 
         int apartments = 0;
         for (Room room : rooms) {
+            if (room != null)
             if (room.getPersons() == persons && room.getPrice() == price && room.getHotelName() == hotel && room.getCityName() == city)
                 apartments++;
 
@@ -22,6 +23,7 @@ public class GoogleAPI implements API {
         apartments = 0;
 
         for (Room room : rooms) {
+            if (room != null)
             if (room.getPersons() == persons && room.getPrice() == price && room.getHotelName() == hotel && room.getCityName() == city)
                 arrayFindRoom[apartments] = room;
             apartments++;
