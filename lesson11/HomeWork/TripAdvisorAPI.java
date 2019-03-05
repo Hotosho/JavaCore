@@ -1,10 +1,10 @@
 package lesson11.HomeWork;
 
-public class BookingComAPI implements API {
+public class TripAdvisorAPI implements API {
 
     private Room[] rooms;
 
-    public BookingComAPI(Room[] rooms) {
+    public TripAdvisorAPI(Room[] rooms) {
         this.rooms = rooms;
     }
 
@@ -12,10 +12,9 @@ public class BookingComAPI implements API {
     public Room[] findRooms(int price, int persons, String city, String hotel) {
 
         int apartments = 0;
-
         for (Room room : rooms) {
-            if (room.getPersons() == persons && room.getCityName() == city && room.getHotelName() == hotel) {
-                if (room.getPrice() >= price - 100 && room.getPrice() <= price + 100)
+            if (room.getCityName() == city && room.getHotelName() == hotel && room.getPrice() == price) {
+                if (room.getPersons() >= persons - 1 && room.getPersons() <= persons + 1)
                     apartments++;
             }
         }
@@ -24,15 +23,14 @@ public class BookingComAPI implements API {
         apartments = 0;
 
         for (Room room : rooms) {
-            if (room.getPersons() == persons && room.getCityName() == city && room.getHotelName() == hotel) {
-                if (room.getPrice() >= price - 100 && room.getPrice() <= price + 100)
+            if (room.getCityName() == city && room.getHotelName() == hotel && room.getPrice() == price) {
+                if (room.getPersons() >= persons - 1 && room.getPersons() <= persons + 1)
                     arrayFindRoom[apartments] = room;
                 apartments++;
             }
         }
         return arrayFindRoom;
     }
-
 
     @Override
     public Room[] getAll() {
