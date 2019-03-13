@@ -26,13 +26,36 @@ public class UkrainianBankSystem implements BankSystem {
         //if (!checkWithdraw(user, amount, user.getBalance()))
         //return;
 
-        //double balanceAfterWithdraw = user.getBalance() - amount - user.getBank().getCommission(amount);
-        //user.setBalance(balanceAfterWithdraw);
+        //user.setBalance(user.getBalance() - amount - user.getBank().getCommission(amount));
 
         if (!checkWithdraw(user, amount))
             return;
-        user.setBalance(user.getBalance() - amount - user.getBank().getCommission(amount));
+        double balanceAfterWithdraw = user.getBalance() - amount - amount * user.getBank().getCommission(amount);
+        user.setBalance(balanceAfterWithdraw);
+
     }
+
+
+    @Override
+    public void fund(User user, int amount) {
+
+        if (!checkFund(user, amount))
+            return;
+        if (user.getBank().getLimitOfFunding() > amount)
+            user.setBalance(user.getBalance() + amount);
+    }
+
+
+    @Override
+    public void transferMoney(User fromUser, User toUser, int amount) {
+
+    }
+
+    @Override
+    public void paySalary(User user) {
+
+    }
+
 
     private boolean checkWithdraw(User user, int amount) {
         return checkWithdrawLimits(user, amount, user.getBank().getLimitOfWithdrawal()) &&
@@ -51,57 +74,9 @@ public class UkrainianBankSystem implements BankSystem {
         System.err.println("Can't withdraw money " + amount + "from user " + user.toString());
     }
 
-    @Override
-    public void fund(User user, int amount) {
-
-        if (user != null) {
-            if (!checkFund(user, amount))
-                return;
-            user.setBalance(user.getBalance() + amount - user.getBank().getCommission(amount));
-        }
-    }
-
     private boolean checkFund(User user, int amount) {
-        return checkFundLimits(user, amount, user.getBank().getLimitOfFunding()) &&
-                checkFundLimits(user, amount, user.getBalance());
-    }
+        return user.getBank().getLimitOfFunding() > amount;
 
-    private boolean checkFundLimits(User user, int amount, double limit) {
-        if (amount + user.getBank().getCommission(amount) > limit) {
-            printFundErorMsg(amount, user);
-            return false;
-        }
-        return true;
-    }
-
-    private void printFundErorMsg(int amount, User user) {
-        System.err.println("Can't funding money" + amount + "from user" + user.toString());
-    }
-
-
-    @Override
-    public void transferMoney(User fromUser, User toUser, int amount) {
-        // снимаем деньги fromUser
-        // пополняем toUser
-
-        if (!checkWithdraw(fromUser, amount))
-            return;
-        if (!checkFund(toUser, amount))
-            return;
-        if (fromUser != null) {
-            if (toUser != null) {
-                fromUser.setBalance(fromUser.getBalance() - amount - fromUser.getBank().getCommission(amount));
-                toUser.setBalance(toUser.getBalance() + amount - toUser.getBank().getCommission(amount));
-            }
-
-        }
-    }
-
-    @Override
-    public void paySalary(User user) {
-        // TODO: 2019-03-10  homeWork;
 
     }
-
-
 }
