@@ -14,7 +14,7 @@ public class Demo {
         Room room6 = new Room(6, 200, 2, null, "Hotel", "City1");
         Room[] rooms = new Room[]{room1, room2, room3, room4, room5, room6, null};
         Room[] roomsX = new Room[]{};
-        Room[] roomsY = new Room[]{room1,room6, null};
+        Room[] roomsY = new Room[]{room1, room6, null};
 
         API bookingComAPI = new BookingComAPI(rooms);
         API tripAdvisorAPI = new TripAdvisorAPI(rooms);
@@ -23,9 +23,9 @@ public class Demo {
         API[] apis = new API[]{bookingComAPI, tripAdvisorAPI, googleAPI, null};
 
         for (API api : apis) {
-            if (api == null){
-                System.out.println("!!!!!!!!!null");}
-            else {
+            if (api == null) {
+                System.out.println("******null******");
+            } else {
                 System.out.println(api.getClass());
                 System.out.println("1" + Arrays.toString(api.findRooms(120, 2, "City1", "Hotel")));
                 System.out.println("2" + Arrays.toString(api.findRooms(100, 2, "City1", "Hotel1")));
