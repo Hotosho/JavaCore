@@ -2,7 +2,7 @@ package lesson17;
 
 public class Solution {
     public static void main(String[] args) {
-        String test = "Everything you need to know about the Boeing";
+        String test = "4Everything you need to know about the Boeing";
 
 
         System.out.println(countWords(test));
@@ -18,12 +18,47 @@ public class Solution {
 
         String[] strings = input.split(" ");
 
-        for (String werb : strings) {
-            if (checkWords(werb)) {
+        for (String word : strings) {
+            if (checkWords(word)) {
                 counter++;
             }
         }
         return counter;
+    }
+
+    public static String maxWord(String input) {
+
+        if (input == null)
+            return null;
+        return checkChars(input);
+
+        /*String[] strings = input.split(" ");
+        String maxWord = strings[0];*/
+
+        /*for (String stringMax : strings) {
+            if (checkWords(stringMax)) {
+                if (stringMax.length() > maxWord.length())
+                    maxWord = stringMax;
+                continue;
+            }
+        }*/
+    }
+
+    public static String minWord(String input) {
+
+        if (input == null)
+            return null;
+
+        String[] strings = input.split(" ");
+        String minWord = strings[0];
+
+        for (String minString : strings) {
+            if (checkWords(minString)) {
+                if (minString.length() < minWord.length())
+                    minWord = minString;
+            }
+        }
+        return minWord;
     }
 
 
@@ -38,39 +73,22 @@ public class Solution {
         return !input.isEmpty();
     }
 
-    public static String maxWord(String input) {
+    private static String checkChars(String input) {
 
-        if (input == null)
-            return null;
-
-        String[] strings = input.split(" ");
-        String maxWord = strings[0];
-
-        for (String stringMax : strings) {
-            if (checkWords(stringMax)) {
-                if (stringMax.length() > maxWord.length())
-                    maxWord = stringMax;
-
+        int maxCount = 0;
+        int counter = 0;
+        String[] arrayWords = input.split(" ");
+        for (String word1 : arrayWords) {
+            for (String word2 : arrayWords) {
+                if (word1.equals(word2) && word1.length() > 0 && checkWords(word2))
+                    counter++;
+            }
+            if (counter > maxCount) {
+                maxCount = counter;
+                input = word1;
             }
         }
-        return maxWord;
-    }
-
-    public static String minWord(String input) {
-
-        if (input == null)
-            return null;
-
-        String[] strings = input.split(" ");
-        String minWord = strings[0];
-
-        for (String stringMin : strings) {
-            if (checkWords(stringMin)) {
-                if (stringMin.length() < minWord.length())
-                    minWord = stringMin;
-            }
-        }
-        return minWord;
+        return input;
     }
 
 
