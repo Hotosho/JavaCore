@@ -2,7 +2,7 @@ package lesson17;
 
 public class Solution {
     public static void main(String[] args) {
-        String test = "4Everything you need to know about the Boeing";
+        String test = "444Everything you need to know about the Boeing";
 
 
         System.out.println(countWords(test));
@@ -28,20 +28,20 @@ public class Solution {
 
     public static String maxWord(String input) {
 
-        if (input == null)
-            return null;
-        return checkChars(input);
-
-        /*String[] strings = input.split(" ");
-        String maxWord = strings[0];*/
-
-        /*for (String stringMax : strings) {
-            if (checkWords(stringMax)) {
-                if (stringMax.length() > maxWord.length())
-                    maxWord = stringMax;
-                continue;
+        int maxCount = 0;
+        int counter = 0;
+        String[] arrayWords = input.split(" ");
+        for (String word1 : arrayWords) {
+            for (String word2 : arrayWords) {
+                if (word1.equals(word2) && word1.length() > 0 && checkWords(word2))
+                    counter++;
             }
-        }*/
+            if (counter > maxCount) {
+                maxCount = counter;
+                input = word1;
+            }
+        }
+        return input;
     }
 
     public static String minWord(String input) {
@@ -72,24 +72,5 @@ public class Solution {
         }
         return !input.isEmpty();
     }
-
-    private static String checkChars(String input) {
-
-        int maxCount = 0;
-        int counter = 0;
-        String[] arrayWords = input.split(" ");
-        for (String word1 : arrayWords) {
-            for (String word2 : arrayWords) {
-                if (word1.equals(word2) && word1.length() > 0 && checkWords(word2))
-                    counter++;
-            }
-            if (counter > maxCount) {
-                maxCount = counter;
-                input = word1;
-            }
-        }
-        return input;
-    }
-
 
 }
