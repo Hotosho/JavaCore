@@ -28,25 +28,69 @@ public class Solution {
 
     public static String maxWord(String input) {
 
-        int maxCount = 0;
-        int counter = 0;
-        String[] arrayWords = input.split(" ");
-        for (String word1 : arrayWords) {
-            for (String word2 : arrayWords) {
-                if (word1.equals(word2) && word1.length() > 0 && checkWords(word2))
-                    counter++;
-            }
-            if (counter > maxCount) {
-                maxCount = counter;
-                input = word1;
+        String[] words = input.split(" ");
+
+        if (words.length == 0)
+            return null;
+
+        String maxWord = null;
+
+        for (String word : words){
+            if (word.length() > 0 && checkWords(word)){
+                maxWord = word;
+                break;
             }
         }
-        return input;
+        if (maxWord == null)
+            return null;
+
+        for (String word : words){
+            if (word.length() > maxWord.length() && checkWords(word)){
+                maxWord = word;
+            }
+        }
+
+        return maxWord;
+
+        /*if (input == null)
+            return null;
+        String[] strings = input.split(" ");
+        String maxWord = "";
+        for (String maxString : strings) {
+            if (checkWords(maxString)) {
+                if (maxString.length() > maxWord.length())
+                    maxWord = maxString;
+            }
+        }
+        return maxWord;*/
     }
 
     public static String minWord(String input) {
 
-        if (input == null)
+        String[] words = input.split(" ");
+
+        if (words.length == 0)
+            return null;
+
+        String minWord = null;
+
+        for (String word : words){
+            if (word.length() > 0 && checkWords(word)){
+                minWord = word;
+                break;
+            }
+        }
+        if (minWord == null)
+            return null;
+
+        for (String word : words){
+            if (word.length() < minWord.length() && checkWords(word)){
+                minWord = word;
+            }
+        }
+        return minWord;
+
+        /*if (input == null)
             return null;
 
         String[] strings = input.split(" ");
@@ -58,7 +102,7 @@ public class Solution {
                     minWord = minString;
             }
         }
-        return minWord;
+        return minWord;*/
     }
 
 
