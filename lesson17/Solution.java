@@ -120,7 +120,7 @@ public class Solution {
 
     public static boolean validate(String address) {
 
-        if (address.length() == 0)
+        if (address == null)
             return false;
         String link = address.trim();
 
@@ -129,7 +129,7 @@ public class Solution {
         if (!link.endsWith(".com") && !link.endsWith(".net") && !link.endsWith(".org"))
             return false;
 
-        return checkWords(link);
+        return checkLink(link);
     }
 
 
@@ -143,5 +143,17 @@ public class Solution {
         }
         return !input.isEmpty();
     }
+
+    private static boolean checkLink(String input) {
+
+        char[] chars = input.trim().toCharArray();
+
+        for (char ch : chars) {
+            if (!Character.isLetterOrDigit(ch))
+                return false;
+        }
+        return true;
+    }
+
 
 }
