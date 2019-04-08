@@ -2,12 +2,15 @@ package lesson17;
 
 public class Solution {
     public static void main(String[] args) {
-        String test = "444Everything you need to know about the Boeing";
+        String test = "444Everything you need to know about the the Boeing";
+        String link = "https://gromcode.com";
 
 
         System.out.println(countWords(test));
         System.out.println(maxWord(test));
         System.out.println(minWord(test));
+        System.out.println(mostCountedWord(test));
+        System.out.println(validate(link));
 
     }
 
@@ -35,8 +38,8 @@ public class Solution {
 
         String maxWord = null;
 
-        for (String word : words){
-            if (word.length() > 0 && checkWords(word)){
+        for (String word : words) {
+            if (word.length() > 0 && checkWords(word)) {
                 maxWord = word;
                 break;
             }
@@ -44,25 +47,14 @@ public class Solution {
         if (maxWord == null)
             return null;
 
-        for (String word : words){
-            if (word.length() > maxWord.length() && checkWords(word)){
+        for (String word : words) {
+            if (word.length() > maxWord.length() && checkWords(word)) {
                 maxWord = word;
             }
         }
 
         return maxWord;
 
-        /*if (input == null)
-            return null;
-        String[] strings = input.split(" ");
-        String maxWord = "";
-        for (String maxString : strings) {
-            if (checkWords(maxString)) {
-                if (maxString.length() > maxWord.length())
-                    maxWord = maxString;
-            }
-        }
-        return maxWord;*/
     }
 
     public static String minWord(String input) {
@@ -74,8 +66,8 @@ public class Solution {
 
         String minWord = null;
 
-        for (String word : words){
-            if (word.length() > 0 && checkWords(word)){
+        for (String word : words) {
+            if (word.length() > 0 && checkWords(word)) {
                 minWord = word;
                 break;
             }
@@ -83,26 +75,61 @@ public class Solution {
         if (minWord == null)
             return null;
 
-        for (String word : words){
-            if (word.length() < minWord.length() && checkWords(word)){
+        for (String word : words) {
+            if (word.length() < minWord.length() && checkWords(word)) {
                 minWord = word;
             }
         }
         return minWord;
+    }
 
-        /*if (input == null)
+    public static String mostCountedWord(String input) {
+
+        String[] words = input.split(" ");
+
+        if (words.length == 0)
             return null;
 
-        String[] strings = input.split(" ");
-        String minWord = strings[0];
+        String mostCountWord = null;
 
-        for (String minString : strings) {
-            if (checkWords(minString)) {
-                if (minString.length() < minWord.length())
-                    minWord = minString;
+        for (String word : words) {
+            if (word.length() > 0 && checkWords(word)) {
+                mostCountWord = word;
+                break;
             }
         }
-        return minWord;*/
+
+        int mostCounter = 0;
+
+        for (String word : words) {
+            int count = 0;
+            for (String word1 : words) {
+                if (word.equals(word1) && word.length() > 0 && checkWords(word1)) {
+                    count++;
+                }
+            }
+            if (count > mostCounter) {
+                mostCounter = count;
+                mostCountWord = word;
+            }
+        }
+
+
+        return mostCountWord;
+    }
+
+    public static boolean validate(String address) {
+
+        if (address.length() == 0)
+            return false;
+        String link = address.trim();
+
+        if (!link.startsWith("https://") || !link.startsWith("http://"))
+            return false;
+        if (!link.endsWith(".com") && !link.endsWith(".net") && !link.endsWith(".org"))
+            return false;
+
+        return checkWords(link);
     }
 
 
