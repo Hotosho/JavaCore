@@ -124,10 +124,16 @@ public class Solution {
             return false;
         String link = address.trim();
 
-        if (!link.startsWith("https://") || !link.startsWith("http://"))
+        if (!link.startsWith("https://") && !link.startsWith("http://"))
             return false;
         if (!link.endsWith(".com") && !link.endsWith(".net") && !link.endsWith(".org"))
             return false;
+
+        link = link.replace("https://", "");
+        link = link.replace("http://", "");
+        link = link.replace(".com", "");
+        link = link.replace(".net", "");
+        link = link.replace(".org", "");
 
         return checkLink(link);
     }
