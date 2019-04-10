@@ -4,7 +4,6 @@ public class Solution {
     public static void main(String[] args) {
         String test = "444Everything you need to know about the the Boeing";
         String link = "https://githab.com";
-        String testLeink = "http://https://dsdsdsdsdsd.org.net";
 
 
         System.out.println(countWords(test));
@@ -123,21 +122,28 @@ public class Solution {
 
         if (address == null)
             return false;
-        String link = address.trim();
+        address.trim();
 
-        if (!link.startsWith("https://") && !link.startsWith("http://"))
+        if (!address.startsWith("https://") && !address.startsWith("http://"))
             return false;
-        if (!link.endsWith(".com") && !link.endsWith(".net") && !link.endsWith(".org"))
+        if (!address.endsWith(".com") && !address.endsWith(".net") && !address.endsWith(".org"))
             return false;
 
-        link = link.replace("www.", "");
-        link = link.replace("https://", "");
-        link = link.replace("http://", "");
-        link = link.replace(".com", "");
-        link = link.replace(".net", "");
-        link = link.replace(".org", "");
+        address = isValid(address, new String[]{"http://", "https://"});
+        address = address != null && address.startsWith("www.") ? address.replaceFirst("www.", "") : address;
+        address = isValid(address, new String[]{".net", ".com", ".org"});
 
-        return checkLink(link);
+        return address != null && address.length() > 0 && checkLink(address);
+    }
+
+    private static String isValid(String address, String[] parts) {
+        for (String part : parts) {
+            if (address.contains(part)) {
+                address = address.replaceFirst(part, "");
+                return address;
+            }
+        }
+        return null;
     }
 
 
@@ -164,44 +170,5 @@ public class Solution {
     }
 
 
-    /*public static boolean validate(String address) {
-        boolean addressValidated = false;
-        String substr = new String("");
-
-//       verify domain zone
-        if (address.indexOf(".com") == (address.length() - 4) ||
-                address.indexOf(".org") == (address.length() - 4) ||
-                address.indexOf(".net") == (address.length() - 4))
-            addressValidated = true;
-        else {
-            return addressValidated = false;
-        }
-
-//        verify how the address starts
-        if (address.startsWith("http://") && (address.indexOf("www.") == 7)) {
-            addressValidated = true;
-            substr = address.substring(11, (address.length() - 4));
-        } else if (address.startsWith("https://") && (address.indexOf("www.") == 8)) {
-            addressValidated = true;
-            substr = address.substring(12, (address.length() - 4));
-        } else if (address.startsWith("http://")) {
-            addressValidated = true;
-            substr = address.substring(7, (address.length() - 4));
-        } else if (address.startsWith("https://")) {
-            addressValidated = true;
-            substr = address.substring(8, (address.length() - 4));
-        } else {
-            return addressValidated = false;
-        }
-
-//        verify special characters and . in the address body
-        for (int i = 0; i < substr.length(); i++) {
-            char ch = substr.charAt(i);
-            if (Character.isLetter(ch) || Character.isDigit(ch)) {
-                addressValidated = true;
-            } else {
-                return addressValidated = false;
-            }
-        }return addressValidated;*/
 }
 
