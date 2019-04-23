@@ -53,8 +53,7 @@ public class Solution {
             if (checkNumber(w)) {
                 result[j] = Integer.parseInt(w);
                 j++;
-            }
-            else {
+            } else {
                 System.out.println("not a number");
             }
         }
