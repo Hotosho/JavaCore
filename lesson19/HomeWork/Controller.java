@@ -32,6 +32,12 @@ public class Controller {
     //трансфер всех файлов из одного хранилища в другое
     public static void transferAll(Storage storageFrom, Storage storageTo){
 
+        int count;
 
+        for (File file : storageFrom.getFiles()){
+            for (File file1 : storageTo.getFiles()){
+                if (file.getFormat().equals(file1.getFormat()) && )
+            }
+        }
     }
 }
