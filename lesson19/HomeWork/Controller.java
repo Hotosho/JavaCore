@@ -4,7 +4,7 @@ public class Controller {
 
 
     //добавляет файл в хранилище. гарантируется что файл уже есть в условной БД
-    public static void put(Storage storage, File file) {
+    public static File put(Storage storage, File file) {
 
         int i = 0;
         for (File file1 : storage.getFiles()) {
@@ -14,7 +14,7 @@ public class Controller {
             }
             i++;
         }
-
+        return storage.getFiles()[i];
     }
 
     //удаляет файл из хранилища
@@ -29,15 +29,43 @@ public class Controller {
         }
     }
 
-    //трансфер всех файлов из одного хранилища в другое
-    public static void transferAll(Storage storageFrom, Storage storageTo){
+    ////////////////// VALIDATE////////
+    //Storage может хранить файлы только поддерживаемого формата
+    private static void validateFileFormat(Storage storage, String format) throws Exception {
 
-        int count;
+        for (String formatFile : storage.getFormatsSupported()) {
+            if (formatFile.equals(format))
+                return;
+        }
+        throw new Exception(format + "format not supported" + storage.getId());
 
-        for (File file : storageFrom.getFiles()){
-            for (File file1 : storageTo.getFiles()){
-                if (file.getFormat().equals(file1.getFormat()) && )
+    }
+
+    //Учитывайте макс размер хранилища
+    private static void validateMaxSizeStorage(Storage storage, long fileSize) throws Exception {
+
+        long size = 0;
+        for (File file : storage.getFiles()) {
+            if (file != null) {
+                size += file.getSize();
+            }
+            if (fileSize + size > storage.getStorageSize())
+                throw new Exception("Storage" + storage.getId() + "file size larger than storage size");
+        }
+    }
+
+    private static void validateCompareFileId(Storage storage, long id) throws Exception {
+
+        for (File file : storage.getFiles()) {
+            if (file.getId() == id) {
+                throw new Exception("File" + file.getId() + "file already stored in storage");
             }
         }
+
+    }
+
+    private static void validateNameSizeFile(Storage storage, String name){
+
+
     }
 }

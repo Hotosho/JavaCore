@@ -1,5 +1,7 @@
 package lesson19.HomeWork;
 
+import java.util.Objects;
+
 public class File {
 
     private long id;
@@ -18,20 +20,57 @@ public class File {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getFormat() {
         return format;
     }
 
+    public void setFormat(String format) {
+        this.format = format;
+    }
 
     public long getSize() {
         return size;
     }
 
+    public void setSize(long size) {
+        this.size = size;
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        File file = (File) o;
+        return id == file.id &&
+                size == file.size &&
+                Objects.equals(name, file.name) &&
+                Objects.equals(format, file.format);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, format, size);
+    }
+
+    @Override
+    public String toString() {
+        return "File{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", format='" + format + '\'' +
+                ", size=" + size +
+                '}';
+    }
 }
