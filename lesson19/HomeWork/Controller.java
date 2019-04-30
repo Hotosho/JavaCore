@@ -64,8 +64,12 @@ public class Controller {
 
     }
 
-    private static void validateNameSizeFile(Storage storage, String name){
+    private static void validateNameSizeFile(Storage storage, String name) throws Exception{
 
-
+        for (File file : storage.getFiles()){
+            if (file.getName().length() > 10){
+                throw new Exception("File" + file.getId() + "NameSizeFile biggest than 10 char");
+            }
+        }
     }
 }
