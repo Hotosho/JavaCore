@@ -31,15 +31,16 @@ public class Controller {
 
     ////////////////// VALIDATE////////
     //Storage может хранить файлы только поддерживаемого формата
-    private static void validateFileFormat(Storage storage, String format) throws Exception {
+    private static void validateFileFormat(Storage storage, String format, long id) throws Exception {
 
         for (String formatFile : storage.getFormatsSupported()) {
             if (formatFile.equals(format))
                 return;
         }
-        throw new Exception(format + "format not supported" + storage.getId());
+        throw new Exception(format + id + "file not supported by storage" + storage.getId());
 
     }
+
 
     //Учитывайте макс размер хранилища
     private static void validateMaxSizeStorage(Storage storage, long fileSize) throws Exception {
