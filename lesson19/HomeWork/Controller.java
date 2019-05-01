@@ -4,7 +4,9 @@ public class Controller {
 
 
     //добавляет файл в хранилище. гарантируется что файл уже есть в условной БД
-    public static File put(Storage storage, File file) {
+    public static File put(Storage storage, File file) throws Exception {
+
+        validatePutMethod(storage, file);
 
         int i = 0;
         for (File file1 : storage.getFiles()) {
@@ -31,13 +33,13 @@ public class Controller {
 
     ////////////////// VALIDATE////////
     //Storage может хранить файлы только поддерживаемого формата
-    private static void validateFileFormat(Storage storage, String format, long id) throws Exception {
+    private static void validateFileFormat(Storage storage, String format) throws Exception {
 
         for (String formatFile : storage.getFormatsSupported()) {
             if (formatFile.equals(format))
                 return;
         }
-        throw new Exception(format + id + "file not supported by storage" + storage.getId());
+        throw new Exception(format + "file not supported by storage" + storage.getId());
 
     }
 
@@ -55,6 +57,7 @@ public class Controller {
         }
     }
 
+    //В одном хранилище не могут хранится файлы с одинаковым айди
     private static void validateCompareFileId(Storage storage, long id) throws Exception {
 
         for (File file : storage.getFiles()) {
@@ -65,13 +68,10 @@ public class Controller {
 
     }
 
-    private static void validateNameSizeFile(Storage storage, String name) throws Exception {
-
-        for (File file : storage.getFiles()) {
-            if (file.getName().length() > 10) {
-                throw new Exception("File" + file.getId() + "NameSizeFile biggest than 10 char");
-            }
-        }
+    private static void validatePutMethod(Storage storage, File file) throws Exception{
+        // почему когда пробую писать через if ошибку дает
+        validateFileFormat(storage, file.getFormat());
+        validateMaxSizeStorage(storage, file.getSize());
+        validateCompareFileId(storage, file.getId());
     }
-
 }
