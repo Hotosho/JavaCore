@@ -15,7 +15,7 @@ public class File {
             this.name = name;
             this.format = format;
             this.size = size;
-            throw new Exception(name + "name has more than 10 characters");
+            throw new Exception(name + id + "name has more than 10 characters");
 
         }
     }
