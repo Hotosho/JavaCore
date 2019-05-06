@@ -40,6 +40,9 @@ public class Controller {
 
     }
 
+    public static void transferFile(Storage storageFrom, Storage storageTo, long id){
+
+    }
     //********** VALIDATE********
 
     //Storage может хранить файлы только поддерживаемого формата
