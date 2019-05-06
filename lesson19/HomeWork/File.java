@@ -60,7 +60,7 @@ public class File {
         if (o == null || getClass() != o.getClass()) return false;
         File file = (File) o;
         return id == file.id &&
-                name.equals(file.name);
+                Objects.equals(name, file.name);
     }
 
     @Override
