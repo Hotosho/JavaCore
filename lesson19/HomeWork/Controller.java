@@ -28,6 +28,7 @@ public class Controller {
         for (File file1 : storage.getFiles()) {
             if (file1 != null) {
                 storage.getFiles()[i] = file1;
+                if (file1.equals(file))
                 file1 = null;
             }
         }
