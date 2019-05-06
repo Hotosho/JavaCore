@@ -20,7 +20,6 @@ public class File {
         }
     }
 
-
     public long getId() {
         return id;
     }
@@ -39,6 +38,21 @@ public class File {
         return size;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
+    }
+
+    public void setSize(long size) {
+        this.size = size;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -46,7 +60,7 @@ public class File {
         if (o == null || getClass() != o.getClass()) return false;
         File file = (File) o;
         return id == file.id &&
-                Objects.equals(name, file.name);
+                name.equals(file.name);
     }
 
     @Override
