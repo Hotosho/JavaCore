@@ -59,23 +59,11 @@ public class File {
         if (o == null || getClass() != o.getClass()) return false;
         File file = (File) o;
         return id == file.id &&
-                size == file.size &&
-                Objects.equals(name, file.name) &&
-                Objects.equals(format, file.format);
+                Objects.equals(name, file.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, format, size);
-    }
-
-    @Override
-    public String toString() {
-        return "File{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", format='" + format + '\'' +
-                ", size=" + size +
-                '}';
+        return Objects.hash(id, name);
     }
 }
