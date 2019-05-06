@@ -11,20 +11,15 @@ public class File {
 
     public File(long id, String name, String format, long size) throws Exception {
         if (name == null || name.length() > 10) {
-            throw new Exception(name + id + "name has more than 10 characters");
-        } else {
             this.id = id;
             this.name = name;
             this.format = format;
             this.size = size;
+            throw new Exception(name + id + "name has more than 10 characters");
+
         }
     }
-    /*public File(long id, String name, String format, long size) {
-        this.id = id;
-        this.name = name;
-        this.format = format;
-        this.size = size;
-    }*/
+
 
     public long getId() {
         return id;

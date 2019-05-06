@@ -31,7 +31,8 @@ public class Controller {
         }
     }
 
-    ////////////////// VALIDATE////////
+    //********** VALIDATE********
+
     //Storage может хранить файлы только поддерживаемого формата
     private static void validateFileFormat(Storage storage, String format) throws Exception {
 
@@ -40,6 +41,14 @@ public class Controller {
                 return;
         }
         throw new Exception(format + "file not supported by storage" + storage.getId());
+        // тут когда пробовал переменной дать id  в throw new, то тогда метод validatePutMethod работать не будет.
+        // private static void validateFileFormat(Storage storage, String format, long id) throws Exception {
+        //
+        //        for (String formatFile : storage.getFormatsSupported()) {
+        //            if (formatFile.equals(format))
+        //                return;
+        //        }
+        //        throw new Exception(format + id + "file not supported by storage" + storage.getId());
 
     }
 
@@ -52,9 +61,9 @@ public class Controller {
             if (file != null) {
                 size += file.getSize();
             }
-            if (fileSize + size > storage.getStorageSize())
-                throw new Exception("Storage" + storage.getId() + "file size larger than storage size");
         }
+        if (fileSize + size > storage.getStorageSize())
+            throw new Exception("Storage" + storage.getId() + "file size larger than storage size");
     }
 
     //В одном хранилище не могут хранится файлы с одинаковым айди
@@ -62,16 +71,33 @@ public class Controller {
 
         for (File file : storage.getFiles()) {
             if (file.getId() == id) {
-                throw new Exception("File" + file.getId() + "file already stored in storage");
+                throw new Exception("File" + file.getId() + "file already stored in storage" + storage.getId());
             }
         }
 
     }
 
-    private static void validatePutMethod(Storage storage, File file) throws Exception{
-        // почему когда пробую писать через if ошибку дает
+    //проверка что есть пустая ячкйка в масиве Put
+    private static boolean checkEmptyItemsInStorage(Storage storage) {
+        if (storage.getFiles() == null)
+            return false;
+
+        int index = 0;
+
+        for (File file : storage.getFiles()) {
+            if (storage.getFiles()[index] != null) {
+                file = storage.getFiles()[index];
+            }
+            index++;
+        }
+        return true;
+    }
+
+    private static void validatePutMethod(Storage storage, File file) throws Exception {
+
         validateFileFormat(storage, file.getFormat());
         validateMaxSizeStorage(storage, file.getSize());
         validateCompareFileId(storage, file.getId());
+        checkEmptyItemsInStorage(storage);
     }
 }
