@@ -26,10 +26,18 @@ public class Controller {
         for (File file1 : storage.getFiles()) {
             if (file1 != null) {
                 storage.getFiles()[i] = file1;
+                i++;
                 if (file1.equals(file))
-                    file = null;
+                    file1 = null;
             }
         }
+    }
+
+    //трансфер всех файлов из одного хранилища в другое
+    public static void transferAll(Storage storageFrom, Storage storageTo) throws Exception{
+
+
+
     }
 
     //********** VALIDATE********
