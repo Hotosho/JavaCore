@@ -26,7 +26,6 @@ public class Controller {
         for (File file1 : storage.getFiles()) {
             if (file1 != null) {
                 storage.getFiles()[i] = file1;
-                i++;
                 if (file1.equals(file))
                     file1 = null;
             }
@@ -34,16 +33,31 @@ public class Controller {
     }
 
     //трансфер всех файлов из одного хранилища в другое
-    public static void transferAll(Storage storageFrom, Storage storageTo) throws Exception{
+    public static void transferAll(Storage storageFrom, Storage storageTo) throws Exception {
 
+        validateTransferAll(storageFrom, storageTo);
 
+        int i = 0;
+        for (File file : storageFrom.getFiles()) {
+            if (file != null) {
+                for (File file1 : storageTo.getFiles()) {
+                    if (file1 == null) {
+                        storageTo.getFiles()[i] = file;
+                    } else
+                        i++;
+                }
+            }
+        }
 
     }
 
-    public static void transferFile(Storage storageFrom, Storage storageTo, long id){
-
+    //трансфер файла с хранилища одного хранилища в другое по его айди. Гарантируется что файл с таким id точно есть в хранилище storageFrom
+    public static void transferFile(Storage storageFrom, Storage storageTo, long id) throws Exception {
     }
+
+
     //********** VALIDATE********
+
 
     //Storage может хранить файлы только поддерживаемого формата
     private static void validateFileFormat(Storage storage, String format) throws Exception {
@@ -111,5 +125,31 @@ public class Controller {
         validateMaxSizeStorage(storage, file.getSize());
         validateCompareFileId(storage, file.getId());
         checkEmptyItemsInStorage(storage);
+    }
+
+    private static boolean validateFormatTransfer(Storage storageFrom, Storage storageTo) throws Exception {
+
+        if (storageFrom.getFormatsSupported().equals(storageTo.getFormatsSupported()))
+            return true;
+        throw new Exception("storageFrom" + storageFrom.getId() + "storages not supported this format" + "storageTo" + storageTo.getId());
+    }
+
+    private static boolean validateSizeTransfer(Storage storageFrom, Storage storageTo) throws Exception {
+
+        int sizeFile = 0;
+        for (File file : storageFrom.getFiles()) {
+            if (file != null)
+                sizeFile += file.getSize();
+            if (sizeFile + storageFrom.getStorageSize() > storageTo.getStorageSize())
+                throw new Exception(storageFrom.getId() + "size more than" + storageTo.getId());
+        }
+        return true;
+    }
+
+    private static void validateTransferAll(Storage storageFrom, Storage storageTo) throws Exception {
+
+        validateFormatTransfer(storageFrom, storageTo);
+        validateSizeTransfer(storageFrom, storageTo);
+
     }
 }
