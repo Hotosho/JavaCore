@@ -27,7 +27,7 @@ public class Controller {
             if (file1 != null) {
                 storage.getFiles()[i] = file1;
                 if (file1.equals(file))
-                    file1 = null;
+                    file = null;
             }
         }
     }
