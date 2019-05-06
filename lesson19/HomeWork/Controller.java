@@ -20,8 +20,9 @@ public class Controller {
     }
 
     //удаляет файл из хранилища
-    public void delete(Storage storage, File file) {
+    public void delete(Storage storage, File file) throws Exception {
 
+        validatePutMethod(storage, file);
         int i = 0;
         for (File file1 : storage.getFiles()) {
             if (file1 != null) {
