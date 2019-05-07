@@ -20,16 +20,17 @@ public class Controller {
     }
 
     //удаляет файл из хранилища
-    public static void delete(Storage storage, File file) {
+    public static File delete(Storage storage, File file) {
 
+        if (file == null || storage.getFiles() == null)
+            return null;
+
+        int i = 0;
         for (File file1 : storage.getFiles()) {
-            if (file1 == null || storage.getFiles() == null) {
-                break;
-            } else {
-                if (file1.equals(file))
-                    file1 = null;
-            }
+            if (file1 != null && file1.equals(file))
+                storage.getFiles()[i] = null;
         }
+        return file;
     }
 
     //трансфер всех файлов из одного хранилища в другое
@@ -60,13 +61,13 @@ public class Controller {
 
 
     //Storage может хранить файлы только поддерживаемого формата
-    private static void validateFileFormat(Storage storage, String format) throws Exception {
+    private static void validateFileFormat(Storage storage, String format, File file) throws Exception {
 
         for (String formatFile : storage.getFormatsSupported()) {
             if (formatFile.equals(format))
                 return;
         }
-        throw new Exception(format + "file not supported by storage" + storage.getId());
+        throw new Exception(file.getId() + "file not supported by storage" + storage.getId());
     }
 
 
@@ -112,7 +113,7 @@ public class Controller {
 
     private static void validatePutMethod(Storage storage, File file) throws Exception {
 
-        validateFileFormat(storage, file.getFormat());
+        validateFileFormat(storage, file.getFormat(), file);
         validateMaxSizeStorage(storage, file.getSize());
         validateCompareFileId(storage, file.getId());
         checkEmptyItemsInStorage(storage);
