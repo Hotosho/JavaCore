@@ -25,10 +25,13 @@ public class Controller {
         if (file == null || storage.getFiles() == null)
             return null;
 
+        int i = 0;
         for (File file1 : storage.getFiles()){
             if (file1 != null && file1.equals(file))
-                file1 = null;
+                storage.getFiles()[i] = null;
+            break;
         }
+        i++;
         return file;
     }
 
