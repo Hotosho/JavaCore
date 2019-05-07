@@ -20,17 +20,24 @@ public class Controller {
     }
 
     //удаляет файл из хранилища
-    public static void delete(Storage storage, File file) throws Exception {
-
-        if (file == null || storage.getFiles() == null)
-            throw new Exception(file.getId() + " missing file for deletion  " + storage.getId());
-
-
-        for (File file1 : storage.getFiles()){
-            if (file1 != null && file1.equals(file))
-                file1 = null;
+    public void delete(Storage storage, File file) throws Exception {
+        // check that file Exists
+        boolean isExist = false;
+        for (File fl : storage.getFiles()){
+            if (fl != null && fl.equals(file))
+                isExist = true;
+            break;
         }
 
+        if (!isExist)
+            throw new Exception("File does not exist in storage" + storage.getId() + "Can't be deleted");
+
+        int index = 0;
+        for (File fl : storage.getFiles()){
+            if (fl != null && fl.equals(file))
+                storage.getFiles()[index] = null;
+        }
+        index++;
     }
 
     //трансфер всех файлов из одного хранилища в другое
