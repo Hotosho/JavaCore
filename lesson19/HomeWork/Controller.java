@@ -25,6 +25,7 @@ public class Controller {
         for (int i = 0; i < storage.getFiles().length; i++){
             if (storage.getFiles()[i] != null && storage.getFiles()[i].equals(file))
                 storage.getFiles()[i] = null;
+            return;
         }
     }
 
