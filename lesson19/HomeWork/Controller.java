@@ -20,19 +20,17 @@ public class Controller {
     }
 
     //удаляет файл из хранилища
-    public static File delete(Storage storage, File file) {
+    public static void delete(Storage storage, File file) throws Exception {
 
         if (file == null || storage.getFiles() == null)
-            return null;
+            throw new Exception(file.getId() + " missing file for deletion  " + storage.getId());
 
-        int i = 0;
+
         for (File file1 : storage.getFiles()){
             if (file1 != null && file1.equals(file))
-                storage.getFiles()[i] = null;
-            break;
+                file1 = null;
         }
-        i++;
-        return file;
+
     }
 
     //трансфер всех файлов из одного хранилища в другое
