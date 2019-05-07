@@ -22,10 +22,10 @@ public class Controller {
     //удаляет файл из хранилища
     public static void delete(Storage storage, File file) {
 
-        int i = 0;
         for (File file1 : storage.getFiles()) {
-            if (file1 != null) {
-                storage.getFiles()[i] = file1;
+            if (file1 == null || storage.getFiles() == null) {
+                break;
+            } else {
                 if (file1.equals(file))
                     file1 = null;
             }
@@ -67,15 +67,6 @@ public class Controller {
                 return;
         }
         throw new Exception(format + "file not supported by storage" + storage.getId());
-        // тут когда пробовал переменной дать id  в throw new, то тогда метод validatePutMethod работать не будет.
-        // private static void validateFileFormat(Storage storage, String format, long id) throws Exception {
-        //
-        //        for (String formatFile : storage.getFormatsSupported()) {
-        //            if (formatFile.equals(format))
-        //                return;
-        //        }
-        //        throw new Exception(format + id + "file not supported by storage" + storage.getId());
-
     }
 
 
