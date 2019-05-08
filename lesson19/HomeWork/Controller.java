@@ -21,9 +21,9 @@ public class Controller {
 
     //удаляет файл из хранилища
     public void delete(Storage storage, File file) throws Exception {
-        // check that file Exists
+        // check that file Exists // обычная проверка на наличие объекта
         boolean isExist = false;
-        for (File fl : storage.getFiles()){
+        for (File fl : storage.getFiles()) {
             if (fl != null && fl.equals(file))
                 isExist = true;
             break;
@@ -33,7 +33,7 @@ public class Controller {
             throw new Exception("File does not exist in storage" + storage.getId() + "Can't be deleted");
 
         int index = 0;
-        for (File fl : storage.getFiles()){
+        for (File fl : storage.getFiles()) {
             if (fl != null && fl.equals(file))
                 storage.getFiles()[index] = null;
         }
@@ -68,11 +68,11 @@ public class Controller {
 
 
     //Storage может хранить файлы только поддерживаемого формата
-    private static void validateFileFormat(Storage storage, String format, File file) throws Exception {
+    private static boolean validateFileFormat(Storage storage, File file) throws Exception {
 
         for (String formatFile : storage.getFormatsSupported()) {
-            if (formatFile.equals(format))
-                return;
+            if (file.getFormat().equals(formatFile))
+                return true;
         }
         throw new Exception(file.getId() + "file not supported by storage" + storage.getId());
     }
@@ -82,47 +82,53 @@ public class Controller {
     private static void validateMaxSizeStorage(Storage storage, long fileSize) throws Exception {
 
         long size = 0;
-        for (File file : storage.getFiles()) {
-            if (file != null) {
-                size += file.getSize();
+        for (File fl : storage.getFiles()) {
+            if (fl != null) {
+                size += fl.getSize();
             }
         }
         if (fileSize + size > storage.getStorageSize())
-            throw new Exception("Storage" + storage.getId() + "file size larger than storage size");
+            throw new Exception("file size larger than storage size" + storage.getId());
     }
 
     //В одном хранилище не могут хранится файлы с одинаковым айди
-    private static void validateCompareFileId(Storage storage, long id) throws Exception {
+    private static boolean validateCompareFileId(Storage storage, File file) throws Exception {
 
-        for (File file : storage.getFiles()) {
-            if (file.getId() == id) {
+        for (File fl : storage.getFiles()) {
+            if (fl != null && fl.getId() == file.getId()) {
                 throw new Exception("File" + file.getId() + "file already stored in storage" + storage.getId());
             }
-        }
-
-    }
-
-    //проверка что есть пустая ячкйка в масиве Put
-    private static boolean checkEmptyItemsInStorage(Storage storage) {
-        if (storage.getFiles() == null)
-            return false;
-
-        int index = 0;
-
-        for (File file : storage.getFiles()) {
-            if (storage.getFiles()[index] != null) {
-                file = storage.getFiles()[index];
-            }
-            index++;
         }
         return true;
     }
 
+    //проверка что есть пустая ячкйка в масиве Put
+    private static boolean checkEmptyItemsInStorage(Storage storage) throws Exception {
+
+        for (File fl : storage.getFiles()){
+            if (fl == null)
+                return true;
+        }
+        throw new Exception("no free space in storage" + storage.getId());
+
+        /*if (storage.getFiles() == null)
+            return false;
+
+        int index = 0;
+        for (File fl : storage.getFiles()) {
+            if (storage.getFiles()[index] != null) {
+                fl = storage.getFiles()[index];
+            }
+            index++;
+        }
+        return true;*/
+    }
+
     private static void validatePutMethod(Storage storage, File file) throws Exception {
 
-        validateFileFormat(storage, file.getFormat(), file);
+        validateFileFormat(storage, file);
         validateMaxSizeStorage(storage, file.getSize());
-        validateCompareFileId(storage, file.getId());
+        validateCompareFileId(storage, file);
         checkEmptyItemsInStorage(storage);
     }
 
