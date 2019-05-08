@@ -68,13 +68,13 @@ public class Controller {
 
 
     //Storage может хранить файлы только поддерживаемого формата
-    private static boolean validateFileFormat(Storage storage, File file) throws Exception {
+    private static void validateFileFormat(Storage storage, File file) throws Exception {
 
         for (String formatFile : storage.getFormatsSupported()) {
-            if (formatFile.equals(file))
-                return true;
+            if (formatFile.equals(file.getFormat()))
+                return;
         }
-        throw new Exception(file.getId() + "file not supported by storage" + storage.getId());
+        throw new Exception("file format" + file.getId() + "file not supported by storage" + storage.getId());
     }
 
 
