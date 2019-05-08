@@ -68,7 +68,7 @@ public class Controller {
 
 
     //Storage может хранить файлы только поддерживаемого формата
-    private static boolean validateFileFormat(Storage storage, File file, String format) throws Exception {
+    private static boolean validateFileFormat(Storage storage, File file) throws Exception {
 
         for (String formatFile : storage.getFormatsSupported()) {
             if (formatFile.equals(file))
@@ -88,7 +88,7 @@ public class Controller {
             }
         }
         if (fileSize + size > storage.getStorageSize())
-            throw new Exception("file size larger than storage size" + storage.toString());
+            throw new Exception("file size larger than storage size" + storage.getId());
     }
 
     //В одном хранилище не могут хранится файлы с одинаковым айди
@@ -120,7 +120,7 @@ public class Controller {
 
     private static void validatePutMethod(Storage storage, File file) throws Exception {
 
-        validateFileFormat(storage, file, file.getFormat());
+        validateFileFormat(storage, file);
         validateMaxSizeStorage(storage, file.getSize());
         validateCompareFileId(storage, file.getId());
         checkEmptyItemsInStorage(storage);
