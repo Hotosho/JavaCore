@@ -68,10 +68,10 @@ public class Controller {
 
 
     //Storage может хранить файлы только поддерживаемого формата
-    private static boolean validateFileFormat(Storage storage, File file) throws Exception {
+    private static boolean validateFileFormat(Storage storage, File file, String format) throws Exception {
 
         for (String formatFile : storage.getFormatsSupported()) {
-            if (file.getFormat().equals(formatFile))
+            if (formatFile.equals(file))
                 return true;
         }
         throw new Exception(file.getId() + "file not supported by storage" + storage.getId());
@@ -82,53 +82,47 @@ public class Controller {
     private static void validateMaxSizeStorage(Storage storage, long fileSize) throws Exception {
 
         long size = 0;
-        for (File fl : storage.getFiles()) {
-            if (fl != null) {
-                size += fl.getSize();
+        for (File file : storage.getFiles()) {
+            if (file != null) {
+                size += file.getSize();
             }
         }
         if (fileSize + size > storage.getStorageSize())
-            throw new Exception("file size larger than storage size" + storage.getId());
+            throw new Exception("file size larger than storage size" + storage.toString());
     }
 
     //В одном хранилище не могут хранится файлы с одинаковым айди
-    private static boolean validateCompareFileId(Storage storage, File file) throws Exception {
+    private static void validateCompareFileId(Storage storage, long id) throws Exception {
 
-        for (File fl : storage.getFiles()) {
-            if (fl != null && fl.getId() == file.getId()) {
+        for (File file : storage.getFiles()) {
+            if (file.getId() == id) {
                 throw new Exception("File" + file.getId() + "file already stored in storage" + storage.getId());
             }
+        }
+
+    }
+
+    //проверка что есть пустая ячкйка в масиве Put
+    private static boolean checkEmptyItemsInStorage(Storage storage) {
+
+        if (storage.getFiles() == null)
+            return false;
+
+        int index = 0;
+        for (File file : storage.getFiles()) {
+            if (storage.getFiles()[index] != null) {
+                file = storage.getFiles()[index];
+            }
+            index++;
         }
         return true;
     }
 
-    //проверка что есть пустая ячкйка в масиве Put
-    private static boolean checkEmptyItemsInStorage(Storage storage) throws Exception {
-
-        for (File fl : storage.getFiles()){
-            if (fl == null)
-                return true;
-        }
-        throw new Exception("no free space in storage" + storage.getId());
-
-        /*if (storage.getFiles() == null)
-            return false;
-
-        int index = 0;
-        for (File fl : storage.getFiles()) {
-            if (storage.getFiles()[index] != null) {
-                fl = storage.getFiles()[index];
-            }
-            index++;
-        }
-        return true;*/
-    }
-
     private static void validatePutMethod(Storage storage, File file) throws Exception {
 
-        validateFileFormat(storage, file);
+        validateFileFormat(storage, file, file.getFormat());
         validateMaxSizeStorage(storage, file.getSize());
-        validateCompareFileId(storage, file);
+        validateCompareFileId(storage, file.getId());
         checkEmptyItemsInStorage(storage);
     }
 
