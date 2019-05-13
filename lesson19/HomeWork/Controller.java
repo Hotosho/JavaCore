@@ -21,23 +21,25 @@ public class Controller {
 
     //удаляет файл из хранилища
     public void delete(Storage storage, File file) throws Exception {
-        // check that file Exists // обычная проверка на наличие объекта
+        // check that file exists
+
         boolean isExist = false;
         for (File fl : storage.getFiles()) {
-            if (fl != null && fl.equals(file))
+            if (fl != null && fl.equals(file)) {
                 isExist = true;
-            break;
+                break;
+            }
         }
-
         if (!isExist)
-            throw new Exception("File does not exist in storage" + storage.getId() + "Can't be deleted");
+            throw new Exception("File does not exist in storage" + storage.getId() + ". Can't be deleted");
 
         int index = 0;
         for (File fl : storage.getFiles()) {
-            if (fl != null && fl.equals(file))
+            if (fl != null && fl.equals(file)) {
                 storage.getFiles()[index] = null;
+            }
+            index++;
         }
-        index++;
     }
 
     //трансфер всех файлов из одного хранилища в другое
@@ -79,23 +81,23 @@ public class Controller {
 
 
     //Учитывайте макс размер хранилища
-    private static void validateMaxSizeStorage(Storage storage, long fileSize) throws Exception {
+    private static void validateMaxSizeStorage(Storage storage, File file) throws Exception {
 
         long size = 0;
-        for (File file : storage.getFiles()) {
-            if (file != null) {
-                size += file.getSize();
+        for (File fl : storage.getFiles()) {
+            if (fl != null) {
+                size += fl.getSize();
             }
         }
-        if (fileSize + size > storage.getStorageSize())
-            throw new Exception("file size larger than storage size" + storage.getId());
+        if (file.getSize() + size > storage.getStorageSize())
+            throw new Exception(file.getId() + "file size larger than storage size" + storage.getId());
     }
 
     //В одном хранилище не могут хранится файлы с одинаковым айди
     private static void validateCompareFileId(Storage storage, long id) throws Exception {
 
         for (File file : storage.getFiles()) {
-            if (file.getId() == id) {
+            if (file != null && file.getId() == id) {
                 throw new Exception("File" + file.getId() + "file already stored in storage" + storage.getId());
             }
         }
@@ -121,7 +123,7 @@ public class Controller {
     private static void validatePutMethod(Storage storage, File file) throws Exception {
 
         validateFileFormat(storage, file);
-        validateMaxSizeStorage(storage, file.getSize());
+        validateMaxSizeStorage(storage, file);
         validateCompareFileId(storage, file.getId());
         checkEmptyItemsInStorage(storage);
     }
