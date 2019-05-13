@@ -31,7 +31,7 @@ public class Controller {
             }
         }
         if (!isExist)
-            throw new Exception("File does not exist in storage" + storage.getId() + ". Can't be deleted");
+            throw new Exception(file.getId() + "File does not exist in storage" + storage.getId() + ". Can't be deleted");
 
         int index = 0;
         for (File fl : storage.getFiles()) {
