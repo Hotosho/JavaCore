@@ -1,5 +1,7 @@
 package lesson19.HomeWork;
 
+import javafx.collections.transformation.FilteredList;
+
 public class Controller {
 
 
@@ -63,6 +65,9 @@ public class Controller {
 
     //трансфер файла с хранилища одного хранилища в другое по его айди. Гарантируется что файл с таким id точно есть в хранилище storageFrom
     public static void transferFile(Storage storageFrom, Storage storageTo, long id) throws Exception {
+
+        validateFileId(storageFrom, id);
+        put(storageTo, foundFileById(storageTo, id));
     }
 
 
@@ -152,5 +157,23 @@ public class Controller {
         validateFormatTransfer(storageFrom, storageTo);
         validateSizeTransfer(storageFrom, storageTo);
 
+    }
+
+    private static boolean validateFileId(Storage storage, long id) throws Exception{
+
+        for (File fl : storage.getFiles()){
+            if (fl != null && fl.getId() == id)
+                throw  new Exception("File with id" + id + " not found in storage" + storage.getId());
+        }
+        return true;
+    }
+
+    private static File foundFileById(Storage storage, long id) throws Exception{
+
+        for (int i = 0; i < storage.getFiles().length; i++){
+            if (storage.getFiles()[i] != null && storage.getFiles()[i].getId() == id)
+                return storage.getFiles()[i];
+        }
+        throw new Exception("File with id " + id + " not found");
     }
 }
