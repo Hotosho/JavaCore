@@ -8,15 +8,15 @@ public class Controller {
         validate(storage, file);
 
 
-        int i = 0;
-        for (File file1 : storage.getFiles()) {
-            if (file1 == null) {
-                storage.getFiles()[i] = file1;
+        int index = 0;
+        for (File fl : storage.getFiles()) {
+            if (fl == null) {
+                storage.getFiles()[index] = file;
                 break;
             }
-            i++;
+            index++;
         }
-        return storage.getFiles()[i];
+        return storage.getFiles()[index];
     }
 
 
