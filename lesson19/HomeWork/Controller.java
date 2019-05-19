@@ -54,20 +54,20 @@ public class Controller {
         //check that enough size
 
         findById(storage, file.getId());
-        checkFormat(storage, file.getFormat());
+        checkFormat(storage, file);
         checkForFreePlace(storage);
-        checkForSize(storage, file.getSize());
+        checkForSize(storage, file);
 
     }
 
-    private static void checkForSize(Storage storage, long fileSize) throws Exception {
+    private static void checkForSize(Storage storage, File file) throws Exception {
         long usedSize = 0;
-        for (File file : storage.getFiles()) {
-            if (file != null)
-                usedSize += file.getSize();
+        for (File fl : storage.getFiles()) {
+            if (fl != null)
+                usedSize += fl.getSize();
         }
-        if (usedSize + fileSize > storage.getStorageSize())
-            throw new Exception("No free space in storage" + storage.getId());
+        if (usedSize + file.getSize() > storage.getStorageSize())
+            throw new Exception("File" + file.getId() + "No free space in storage" + storage.getId());
     }
 
 
@@ -91,19 +91,27 @@ public class Controller {
     }
 
 
-    private static void checkFormat(Storage storage, String fileFormat) throws Exception {
+    /*private static void checkFormat(Storage storage, String fileFormat) throws Exception {
         for (String format : storage.getFormatsSupported()) {
             if (format.equals(fileFormat))
                 return;
         }
         throw new Exception(fileFormat + "is not supported in storage" + storage.getId());
+    }*/
+
+    private static void checkFormat(Storage storage, File file) throws Exception {
+        for (String format : storage.getFormatsSupported()) {
+            if (format.equals(file.getFormat()))
+                return;
+        }
+        throw new Exception("File format" + file.getId() + "is not supported in storage" + storage.getId());
     }
 
 
     private static File findById(Storage storage, long id) throws Exception {
         for (File file : storage.getFiles()) {
             if (file != null && file.getId() == id)
-                throw new Exception("File" + id + "already exist in storage " + storage.getId());
+                throw new Exception("File" + file.getId() + "already exist in storage " + storage.getId());
         }
         return null;
     }
