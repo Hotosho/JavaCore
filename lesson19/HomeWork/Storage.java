@@ -19,40 +19,21 @@ public class Storage {
     public long getId() {
         return id;
     }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
+    
     public File[] getFiles() {
         return files;
-    }
-
-    public void setFiles(File[] files) {
-        this.files = files;
     }
 
     public String[] getFormatsSupported() {
         return formatsSupported;
     }
 
-    public void setFormatsSupported(String[] formatsSupported) {
-        this.formatsSupported = formatsSupported;
-    }
-
     public String getStorageCountry() {
         return storageCountry;
-    }
-
-    public void setStorageCountry(String storageCountry) {
-        this.storageCountry = storageCountry;
     }
 
     public long getStorageSize() {
         return storageSize;
     }
 
-    public void setStorageSize(long storageSize) {
-        this.storageSize = storageSize;
-    }
 }
