@@ -44,6 +44,22 @@ public class Controller {
     }
 
 
+    private static void transferAll(Storage storageFrom, Storage storageTo) throws Exception {
+
+        int index = 0;
+        for (File fileFrom : storageFrom.getFiles()) {
+            if (fileFrom != null) {
+                for (File fileTo : storageTo.getFiles()) {
+                    if (fileTo == null) {
+                        storageTo.getFiles()[index] = fileFrom;
+                        break;
+                    } else index++;
+                }
+            }
+        }
+    }
+
+
     //******VALIDATION******
 
 
@@ -57,6 +73,10 @@ public class Controller {
         checkFormat(storage, file);
         checkForFreePlace(storage);
         checkForSize(storage, file);
+
+    }
+
+    private static void validateTransferAll(Storage storage, File file) throws Exception{
 
     }
 
@@ -91,14 +111,6 @@ public class Controller {
     }
 
 
-    /*private static void checkFormat(Storage storage, String fileFormat) throws Exception {
-        for (String format : storage.getFormatsSupported()) {
-            if (format.equals(fileFormat))
-                return;
-        }
-        throw new Exception(fileFormat + "is not supported in storage" + storage.getId());
-    }*/
-
     private static void checkFormat(Storage storage, File file) throws Exception {
         for (String format : storage.getFormatsSupported()) {
             if (format.equals(file.getFormat()))
@@ -115,4 +127,7 @@ public class Controller {
         }
         return null;
     }
+
+
+
 }
