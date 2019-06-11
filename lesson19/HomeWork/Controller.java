@@ -21,7 +21,7 @@ public class Controller {
 
 
     //удаляет файл из хранилища
-    public void delete(Storage storage, File file) throws Exception {
+    public static void delete(Storage storage, File file) throws Exception {
         // check that file exists
 
         boolean isExist = false;
@@ -45,16 +45,37 @@ public class Controller {
 
 
     private static void transferAll(Storage storageFrom, Storage storageTo) throws Exception {
+        //check that files from storageFrom does not exist
+        //check that storage supports format
+        //check that enough place
+        //check that enough size
 
-        int index = 0;
-        for (File fileFrom : storageFrom.getFiles()) {
-            if (fileFrom != null) {
-                for (File fileTo : storageTo.getFiles()) {
-                    if (fileTo == null) {
-                        storageTo.getFiles()[index] = fileFrom;
-                        break;
-                    } else index++;
-                }
+        long sizeOfFilesFromStorage = 0;
+        for (File fileFromStorage : storageFrom.getFiles()) {
+            findById(storageTo, fileFromStorage.getId());
+            checkFormat(storageTo, fileFromStorage.getFormat());
+
+            sizeOfFilesFromStorage += fileFromStorage.getSize();
+        }
+
+        checkForFreePlace(storageTo, storageFrom.getFiles().length);
+        checkForSize(storageTo, sizeOfFilesFromStorage);
+
+        for (File fileFromStorage : storageFrom.getFiles()) {
+            if (fileFromStorage != null) {
+                delete(storageFrom, fileFromStorage);
+                put(storageTo, fileFromStorage);
+
+            }
+        }
+    }
+
+    public void transferFile(Storage storageFrom, Storage storageTo, long id) throws Exception {
+
+        for (File fileFromStorage : storageFrom.getFiles()) {
+            if (fileFromStorage.getId() == id) {
+                put(storageTo, fileFromStorage);
+                return;
             }
         }
     }
@@ -70,24 +91,21 @@ public class Controller {
         //check that enough size
 
         findById(storage, file.getId());
-        checkFormat(storage, file);
+        checkFormat(storage, file.getFormat());
         checkForFreePlace(storage);
-        checkForSize(storage, file);
+        checkForSize(storage, file.getSize());
 
     }
 
-    private static void validateTransferAll(Storage storage, File file) throws Exception{
 
-    }
-
-    private static void checkForSize(Storage storage, File file) throws Exception {
+    private static void checkForSize(Storage storage, long fileSize) throws Exception {
         long usedSize = 0;
         for (File fl : storage.getFiles()) {
             if (fl != null)
                 usedSize += fl.getSize();
         }
-        if (usedSize + file.getSize() > storage.getStorageSize())
-            throw new Exception("File" + file.getId() + "No free space in storage" + storage.getId());
+        if (usedSize + fileSize > storage.getStorageSize())
+            throw new Exception("File" + "No free space in storage" + storage.getId());
     }
 
 
@@ -111,23 +129,21 @@ public class Controller {
     }
 
 
-    private static void checkFormat(Storage storage, File file) throws Exception {
+    private static void checkFormat(Storage storage, String fileFormat) throws Exception {
         for (String format : storage.getFormatsSupported()) {
-            if (format.equals(file.getFormat()))
+            if (format.equals(fileFormat))
                 return;
         }
-        throw new Exception("File format" + file.getId() + "is not supported in storage" + storage.getId());
+        throw new Exception(fileFormat + "is not supported in storage" + storage.getId());
     }
 
 
     private static File findById(Storage storage, long id) throws Exception {
         for (File file : storage.getFiles()) {
             if (file != null && file.getId() == id)
-                throw new Exception("File" + file.getId() + "already exist in storage " + storage.getId());
+                throw new Exception("File" + id + "already exist in storage " + storage.getId());
         }
         return null;
     }
-
-
 
 }
