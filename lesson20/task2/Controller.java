@@ -21,14 +21,14 @@ public class Controller {
     }
 
 
-    Transaction[] transactionList(String city){
-// TODO: 2019-06-11  
-        return null;
+    public Transaction[] transactionList(String city){
+
+        return transactionDAO.transactionList(city);
     }
 
 
     Transaction[] transactionList(int amount){
-// TODO: 2019-06-11  
-        return null;
+
+        return transactionDAO.transactionList(amount);
     }
 }

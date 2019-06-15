@@ -37,9 +37,11 @@ public class TransactionDAO {
 
         int sum = 0;
         int count = 0;
+        int index = 0;
         for (Transaction tr : getTransactionsPerDay(transaction.getDateCreated())) {
+            transactions[index] = tr;
             sum += tr.getAmount();
-            count++;
+            count += tr.getAmount();
         }
 
 
@@ -78,13 +80,40 @@ public class TransactionDAO {
 
     Transaction[] transactionList(String city) {
 
-        return null;
+        int count = 0;
+        for (Transaction tr : transactions) {
+            if (tr != null && tr.getCity().equals(utils.getCities()))
+                count++;
+
+        }
+
+        Transaction[] returnTransactionListCity = new Transaction[count];
+
+        int i = 0;
+        for (Transaction tr : transactions) {
+            if (tr != null && tr.getCity().equals(utils.getCities()))
+                returnTransactionListCity[i] = tr;
+        }
+        return returnTransactionListCity;
     }
 
 
     Transaction[] transactionList(int amount) {
 
-        return null;
+        int count = 0;
+        for (Transaction tr : transactions){
+            if (tr != null && tr.getAmount() == utils.getLimitTransactionsPerDayCount())
+                count++;
+        }
+
+        Transaction[] returnTransactionListAmount = new Transaction[count];
+
+        int i = 0;
+        for (Transaction tr : transactions){
+            if (tr != null && tr.getAmount() == utils.getLimitTransactionsPerDayAmount())
+                returnTransactionListAmount[i] = tr;
+        }
+        return returnTransactionListAmount;
     }
 
     private Transaction[] getTransactionsPerDay(Date dateOfCurTransaction) {
