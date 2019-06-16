@@ -54,14 +54,23 @@ public class Transaction {
                 amount == that.amount &&
                 Objects.equals(city, that.city) &&
                 Objects.equals(description, that.description) &&
-                type == that.type &&
-                Objects.equals(dateCreated, that.dateCreated);
+                type == that.type;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, city, amount, description, type, dateCreated);
+        return Objects.hash(id, city, amount, description, type);
     }
 
-
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id +
+                ", city='" + city + '\'' +
+                ", amount=" + amount +
+                ", description='" + description + '\'' +
+                ", type=" + type +
+                ", dateCreated=" + dateCreated +
+                '}';
+    }
 }
