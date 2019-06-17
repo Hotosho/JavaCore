@@ -72,6 +72,7 @@ public class TransactionDAO {
         for (Transaction tr : transactions) {
             if (tr != null) {
                 returnTransactionList[i] = tr;
+                i++;
             }
         }
         return returnTransactionList;
@@ -93,6 +94,7 @@ public class TransactionDAO {
         for (Transaction tr : transactions) {
             if (tr != null && tr.getCity().equals(utils.getCities()))
                 returnTransactionListCity[i] = tr;
+            i++;
         }
         return returnTransactionListCity;
     }
@@ -112,6 +114,7 @@ public class TransactionDAO {
         for (Transaction tr : transactions){
             if (tr != null && tr.getAmount() == utils.getLimitTransactionsPerDayAmount())
                 returnTransactionListAmount[i] = tr;
+            i++;
         }
         return returnTransactionListAmount;
     }
@@ -168,6 +171,7 @@ public class TransactionDAO {
                 return transactions[i];
 
             }
+            i++;
         }
         throw new InternalServerException("Not free place in array" + transaction.getId());
     }

@@ -1,5 +1,9 @@
 package lesson20.task2;
 
+import lesson20.task2.exception.BadRequestException;
+import lesson20.task2.exception.InternalServerException;
+import lesson20.task2.exception.LimitExceeded;
+
 import java.util.Arrays;
 import java.util.Date;
 
@@ -22,9 +26,21 @@ public class Demo {
 
         Controller controller = new Controller();
 
+        controller.transactionList();
+
         System.out.println(Arrays.toString(controller.transactionList()));
         System.out.println(Arrays.toString(controller.transactionList("Kiev")));
         System.out.println(Arrays.toString(controller.transactionList(5)));
+
+        for (Transaction tr : transactionsArray){
+            try{
+                controller.save(tr);
+            } catch (BadRequestException i1){
+                System.err.println(i1.getMessage());
+            } catch (InternalServerException i2){
+                System.err.println(i2.getMessage());
+            }
+        }
 
         System.out.println(Arrays.toString(controller.transactionList("Wroclaw")));
         System.out.println(Arrays.toString(controller.transactionList(100500)));
