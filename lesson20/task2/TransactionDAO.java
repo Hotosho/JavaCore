@@ -20,11 +20,10 @@ public class TransactionDAO {
         // не хватило места+
 
         validate(transaction);
-        //checkFreePlace(transaction);
 
         int i = 0;
-        for (Transaction tr : transactions){
-            if (tr == null){
+        for (Transaction tr : transactions) {
+            if (tr == null) {
                 transactions[i] = transaction;
                 return transactions[i];
             }
@@ -32,7 +31,6 @@ public class TransactionDAO {
         }
         throw new InternalServerException("Not free place in array" + transaction.getId());
     }
-
 
 
     private void validate(Transaction transaction) throws BadRequestException {
@@ -113,7 +111,7 @@ public class TransactionDAO {
     Transaction[] transactionList(int amount) {
 
         int count = 0;
-        for (Transaction tr : transactions){
+        for (Transaction tr : transactions) {
             if (tr != null && tr.getAmount() == utils.getLimitTransactionsPerDayCount())
                 count++;
         }
@@ -121,7 +119,7 @@ public class TransactionDAO {
         Transaction[] returnTransactionListAmount = new Transaction[count];
 
         int i = 0;
-        for (Transaction tr : transactions){
+        for (Transaction tr : transactions) {
             if (tr != null && tr.getAmount() == utils.getLimitTransactionsPerDayAmount())
                 returnTransactionListAmount[i] = tr;
             i++;
@@ -172,9 +170,9 @@ public class TransactionDAO {
         throw new BadRequestException("This city cannot be a transaction " + transaction.getId());
     }
 
-    /*private Transaction checkFreePlace(Transaction transaction) throws InternalServerException {
+   /* private Transaction checkFreePlace(Transaction transaction) throws InternalServerException {
 
-       int i = 0;
+        int i = 0;
         for (Transaction tr : transactions) {
             if (tr == null) {
                 transactions[i] = transaction;
@@ -182,6 +180,7 @@ public class TransactionDAO {
             }
             i++;
         }
+
         throw new InternalServerException("Not free place in array" + transaction.getId());
     }*/
 }
