@@ -20,9 +20,17 @@ public class TransactionDAO {
         // не хватило места+
 
         validate(transaction);
+        //checkFreePlace(transaction);
 
-        return checkFreePlace(transaction);
-
+        int i = 0;
+        for (Transaction tr : transactions){
+            if (tr == null){
+                transactions[i] = transaction;
+                return transactions[i];
+            }
+            i++;
+        }
+        throw new InternalServerException("Not free place in array" + transaction.getId());
     }
 
 
@@ -164,17 +172,16 @@ public class TransactionDAO {
         throw new BadRequestException("This city cannot be a transaction " + transaction.getId());
     }
 
-    private Transaction checkFreePlace(Transaction transaction) throws InternalServerException {
+    /*private Transaction checkFreePlace(Transaction transaction) throws InternalServerException {
 
-        //int i = 0;
+       int i = 0;
         for (Transaction tr : transactions) {
             if (tr == null) {
-                //transactions[i] = transaction;
-                //return transactions[i];
-
+                transactions[i] = transaction;
+                return transactions[i];
             }
-            //i++;
+            i++;
         }
         throw new InternalServerException("Not free place in array" + transaction.getId());
-    }
+    }*/
 }
