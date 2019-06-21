@@ -39,9 +39,9 @@ public class TransactionDAO {
 
         int sum = 0;
         int count = 0;
-        int index = 0;
+        //int index = 0;
         for (Transaction tr : getTransactionsPerDay(transaction.getDateCreated())) {
-            transactions[index] = tr;
+            //transactions[index] = tr;
             sum += tr.getAmount();
             count += tr.getAmount();
         }
@@ -52,7 +52,7 @@ public class TransactionDAO {
         }
 
 
-        if (count + transaction.getAmount() > utils.getLimitTransactionsPerDayCount()) {
+        if (count + transaction.getAmount() >= utils.getLimitTransactionsPerDayCount()) {
             throw new LimitExceeded("Transaction limit per day count exceed" + transaction.getId() + ". Can't be saved");
         }
 
@@ -166,14 +166,14 @@ public class TransactionDAO {
 
     private Transaction checkFreePlace(Transaction transaction) throws InternalServerException {
 
-        int i = 0;
+        //int i = 0;
         for (Transaction tr : transactions) {
             if (tr == null) {
-                transactions[i] = transaction;
-                return transactions[i];
+                //transactions[i] = transaction;
+                //return transactions[i];
 
             }
-            i++;
+            //i++;
         }
         throw new InternalServerException("Not free place in array" + transaction.getId());
     }
