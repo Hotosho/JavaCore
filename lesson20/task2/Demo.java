@@ -25,8 +25,10 @@ public class Demo {
         transaction7, transaction8, transaction9, transaction10};
 
         Controller controller = new Controller();
-
+        
         controller.transactionList();
+
+
 
         System.out.println(Arrays.toString(controller.transactionList()));
         System.out.println(Arrays.toString(controller.transactionList("Kiev")));
