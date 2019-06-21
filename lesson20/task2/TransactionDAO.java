@@ -25,6 +25,8 @@ public class TransactionDAO {
 
     }
 
+
+
     private void validate(Transaction transaction) throws BadRequestException {
 
         if (transaction == null)
