@@ -47,7 +47,7 @@ public class TransactionDAO {
         int sum = 0;
         int count = 0;
         for (Transaction tr : getTransactionsPerDay(transaction.getDateCreated())) {
-            if (tr != null) {
+            if (tr != null){
                 sum += tr.getAmount();
                 count += tr.getAmount();
             }
