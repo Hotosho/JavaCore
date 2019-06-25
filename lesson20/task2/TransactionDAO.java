@@ -45,11 +45,12 @@ public class TransactionDAO {
 
         int sum = 0;
         int count = 0;
-        //int index = 0;
         for (Transaction tr : getTransactionsPerDay(transaction.getDateCreated())) {
-            //transactions[index] = tr;
-            sum += tr.getAmount();
-            count += tr.getAmount();
+            if (tr != null) {
+                sum += tr.getAmount();
+                count += tr.getAmount();
+            }
+
         }
 
 
