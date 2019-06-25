@@ -43,10 +43,6 @@ public class TransactionDAO {
         if (transaction.getAmount() > utils.getLimitSimpleTransactionAmount())
             throw new LimitExceeded("Transaction limit exceed" + transaction.getId() + ". Can't be saved");
 
-        for (Transaction tr : transactions) {
-            if (tr != null && tr.equals(transaction))
-                throw new BadRequestException("Duplicate transaction with id: " + transaction.getId());
-        }
 
         int sum = 0;
         int count = 0;
