@@ -96,7 +96,7 @@ public class TransactionDAO {
 
         int count = 0;
         for (Transaction tr : transactions) {
-            if (tr != null && tr.getCity().equals(utils.getCities()))
+            if (tr != null && city != null && tr.getCity().equals(utils.getCities()))
                 count++;
 
         }
@@ -108,7 +108,7 @@ public class TransactionDAO {
 
         int i = 0;
         for (Transaction tr : transactions) {
-            if (tr != null && tr.getCity().equals(utils.getCities()))
+            if (tr != null && city.equals(tr.getCity()))
                 returnTransactionListCity[i] = tr;
             i++;
         }
@@ -120,7 +120,7 @@ public class TransactionDAO {
 
         int count = 0;
         for (Transaction tr : transactions) {
-            if (tr != null && tr.getAmount() == utils.getLimitTransactionsPerDayCount())
+            if (tr != null && tr.getAmount() == amount)
                 count++;
         }
 
@@ -131,7 +131,7 @@ public class TransactionDAO {
 
         int i = 0;
         for (Transaction tr : transactions) {
-            if (tr != null && tr.getAmount() == utils.getLimitTransactionsPerDayAmount())
+            if (tr != null && tr.getAmount() == amount)
                 returnTransactionListAmount[i] = tr;
             i++;
         }
