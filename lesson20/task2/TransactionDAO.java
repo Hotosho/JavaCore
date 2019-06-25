@@ -43,6 +43,11 @@ public class TransactionDAO {
         if (transaction.getAmount() > utils.getLimitSimpleTransactionAmount())
             throw new LimitExceeded("Transaction limit exceed" + transaction.getId() + ". Can't be saved");
 
+        for (Transaction tr : transactions) {
+            if (tr != null && tr.equals(transaction))
+                throw new BadRequestException("Duplicate transaction with id: " + transaction.getId());
+        }
+
         int sum = 0;
         int count = 0;
         for (Transaction tr : getTransactionsPerDay(transaction.getDateCreated())) {
@@ -170,18 +175,4 @@ public class TransactionDAO {
         }
         throw new BadRequestException("This city cannot be a transaction " + transaction.getId());
     }
-
-   /* private Transaction checkFreePlace(Transaction transaction) throws InternalServerException {
-
-        int i = 0;
-        for (Transaction tr : transactions) {
-            if (tr == null) {
-                transactions[i] = transaction;
-                return transactions[i];
-            }
-            i++;
-        }
-
-        throw new InternalServerException("Not free place in array" + transaction.getId());
-    }*/
 }
