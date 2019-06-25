@@ -52,7 +52,7 @@ public class TransactionDAO {
         int sum = 0;
         int count = 0;
         for (Transaction tr : getTransactionsPerDay(transaction.getDateCreated())) {
-            if (tr != null){
+            if (tr != null) {
                 sum += tr.getAmount();
                 count++;
                 //count += tr.getAmount();
@@ -66,14 +66,35 @@ public class TransactionDAO {
         }
 
 
-        if (count  >= utils.getLimitTransactionsPerDayCount()) {
+        if (count >= utils.getLimitTransactionsPerDayCount()) {
             throw new LimitExceeded("Transaction limit per day count exceed" + transaction.getId() + ". Can't be saved");
         }
 
     }
 
-
     public Transaction[] transactionList() {
+
+        int count = 0;
+        for (Transaction t : transactions) {
+            if (t != null)
+                count++;
+        }
+
+        Transaction[] transactionsToReturn = new Transaction[count];
+
+        if (count == 0) return transactionsToReturn;
+
+        int i = 0;
+        for (Transaction t : transactions) {
+            if (t != null) {
+                transactionsToReturn[i] = t;
+                i++;
+            }
+        }
+        return transactionsToReturn;
+    }
+
+    /*public Transaction[] transactionList() {
 
         int count = 0;
         for (Transaction tr : transactions) {
@@ -94,7 +115,7 @@ public class TransactionDAO {
             }
         }
         return returnTransactionList;
-    }
+    }*/
 
 
     Transaction[] transactionList(String city) {
