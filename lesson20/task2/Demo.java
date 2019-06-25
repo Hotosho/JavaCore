@@ -22,32 +22,26 @@ public class Demo {
         Transaction transaction10 = new Transaction(10, "Odessa", 2, "las8", TransactionType.OUTCOME, new Date());
 
         Transaction[] transactionsArray = {transaction1, transaction2, transaction3, transaction4, transaction5, transaction6,
-        transaction7, transaction8, transaction9, transaction10};
+                transaction7, transaction8, transaction9, transaction10};
 
         Controller controller = new Controller();
-        
-        controller.transactionList();
-
-
 
         System.out.println(Arrays.toString(controller.transactionList()));
         System.out.println(Arrays.toString(controller.transactionList("Kiev")));
         System.out.println(Arrays.toString(controller.transactionList(5)));
 
-        for (Transaction tr : transactionsArray){
-            try{
+        for (Transaction tr : transactionsArray) {
+            try {
                 controller.save(tr);
-            } catch (BadRequestException i1){
+            } catch (BadRequestException i1) {
                 System.err.println(i1.getMessage());
-            } catch (InternalServerException i2){
+            } catch (InternalServerException i2) {
                 System.err.println(i2.getMessage());
             }
         }
 
         System.out.println(Arrays.toString(controller.transactionList("Wroclaw")));
         System.out.println(Arrays.toString(controller.transactionList(100500)));
-
-
 
 
     }

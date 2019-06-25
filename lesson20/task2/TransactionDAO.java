@@ -49,7 +49,8 @@ public class TransactionDAO {
         for (Transaction tr : getTransactionsPerDay(transaction.getDateCreated())) {
             if (tr != null){
                 sum += tr.getAmount();
-                count += tr.getAmount();
+                count++;
+                //count += tr.getAmount();
             }
 
         }
@@ -77,6 +78,9 @@ public class TransactionDAO {
 
         Transaction[] returnTransactionList = new Transaction[count];
 
+        if (count == 0)
+            return returnTransactionList;
+
         int i = 0;
         for (Transaction tr : transactions) {
             if (tr != null) {
@@ -99,6 +103,9 @@ public class TransactionDAO {
 
         Transaction[] returnTransactionListCity = new Transaction[count];
 
+        if (count == 0)
+            return returnTransactionListCity;
+
         int i = 0;
         for (Transaction tr : transactions) {
             if (tr != null && tr.getCity().equals(utils.getCities()))
@@ -118,6 +125,9 @@ public class TransactionDAO {
         }
 
         Transaction[] returnTransactionListAmount = new Transaction[count];
+
+        if (count == 0)
+            return returnTransactionListAmount;
 
         int i = 0;
         for (Transaction tr : transactions) {
@@ -168,6 +178,6 @@ public class TransactionDAO {
                 return;
 
         }
-        throw new BadRequestException("This city cannot be a transaction " + transaction.getId());
+        throw new BadRequestException("This city" + transaction.getCity() + "cannot be a transaction " + transaction.getId());
     }
 }
