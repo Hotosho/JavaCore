@@ -1,9 +1,13 @@
 package lesson17;
+//Prosty walidator adresów w sieci internet
+//-----
+//Wymagania: adres powinien zaczynać się od nazwy protokołu, dopuszczalne - http:// lub https:// www niekoniecznie blast
+// strefa powinna być oddzielone kropką, dopuszczalne - com, org, net, inne punkty w tytule adresy niedozwolone
 
 public class Solution {
     public static void main(String[] args) {
         String test = "444Everything you need to know about the the Boeing";
-        String link = "https://githab.com";
+        String link = "https://githab.сom";
 
 
         System.out.println(countWords(test));
@@ -16,7 +20,7 @@ public class Solution {
 
 
     public static int countWords(String input) {
-
+//Napisz metoda do liczenia słów w nadchodzącym stringie
         int counter = 0;
 
         String[] strings = input.split(" ");
@@ -30,6 +34,7 @@ public class Solution {
     }
 
     public static String maxWord(String input) {
+        //Napisz metody wyszukiwania najdłuższego i najbardziej krótkiego słowa w nadchodzącym stringie
 
         String[] words = input.split(" ");
 
@@ -84,6 +89,7 @@ public class Solution {
     }
 
     public static String mostCountedWord(String input) {
+        //Napisz metod, który będzie szukać najbardziej powtarzalna słowo w nadchodzącym strigie
 
         String[] words = input.split(" ");
 
@@ -119,6 +125,7 @@ public class Solution {
     }
 
     public static boolean validate(String address) {
+        //walidator adresów w sieci internet
 
         if (address == null)
             return false;
