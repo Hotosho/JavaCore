@@ -1,6 +1,7 @@
-package lessonTest.task1;
+package lesson22.repository;
 
 public class User {
+
     private long id;
     private String name;
     private String sessionId;

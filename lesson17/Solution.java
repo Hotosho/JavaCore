@@ -7,7 +7,7 @@ package lesson17;
 public class Solution {
     public static void main(String[] args) {
         String test = "444Everything you need to know about the the Boeing";
-        String link = "https://githab.сom";
+        String link = "https://githab.com";
 
 
         System.out.println(countWords(test));
