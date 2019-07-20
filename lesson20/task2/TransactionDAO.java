@@ -9,7 +9,7 @@ import java.util.Date;
 
 //dao работа с данными
 public class TransactionDAO {
-    private Transaction[] transactions = new Transaction[10];
+    private static Transaction[] transactions = new Transaction[10];
     private Utils utils = new Utils();
 
     public Transaction save(Transaction transaction) throws BadRequestException, InternalServerException {

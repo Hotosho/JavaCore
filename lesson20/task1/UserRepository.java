@@ -5,9 +5,9 @@ import lesson20.task1.exception.InternalServerException;
 import lesson20.task1.exception.UserNotFoundException;
 
 public class UserRepository {
-    private User[] users = new User[10];
+    private static User[] users = new User[10];
 
-    public User save(User user) throws Exception {
+    public static User save(User user) throws Exception {
         if (user == null)
             throw new BadRequestException("Can't save null user");
 
@@ -31,7 +31,7 @@ public class UserRepository {
     }
 
 
-    public User update(User user) throws Exception {
+    public static User update(User user) throws Exception {
         if (user == null)
             throw new BadRequestException("Can't update null user");
 
@@ -50,7 +50,7 @@ public class UserRepository {
     }
 
 
-    public void delete(long id) throws Exception {
+    public static void delete(long id) throws Exception {
         findById(id);
 
         int index = 0;
@@ -64,7 +64,7 @@ public class UserRepository {
     }
 
 
-    public User findById(long id) throws Exception {
+    public static User findById(long id) throws Exception {
         for (User user : users) {
             if (user != null && id == user.getId())
                 return user;
@@ -74,7 +74,7 @@ public class UserRepository {
     }
 
 
-    public User[] getUsers() {
+    public static User[] getUsers() {
         return users;
     }
 }
