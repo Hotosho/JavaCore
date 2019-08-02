@@ -1,6 +1,8 @@
 package lesson25;
 
-public class GeneralDAO {
+import java.util.Arrays;
+
+public class GeneralDAO<T> {
 
 
     public <T extends IdEntity> void validate(T t) throws Exception {
@@ -20,4 +22,27 @@ public class GeneralDAO {
         }
     }
 
+    @SuppressWarnings("unchecked")
+    private T[] array = (T[]) new Object[10];
+
+    public T save(T t) throws Exception {
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] != null && array[i].equals(t))
+                throw new Exception("Sorry, but the Element is already in the array");
+            if (array[i] == null)
+                return array[i] = t;
+        }
+        throw new Exception("Array overflow");
+    }
+
+    public T[] getAll() {
+        return array;
+    }
+
+    @Override
+    public String toString() {
+        return "GeneralDAO{" +
+                "array=" + Arrays.toString(array) +
+                '}';
+    }
 }
