@@ -3,7 +3,7 @@ package lesson28;
 public class testClass {
     public static void main(String[] args) {
 
-        int test = 01;
+        int test = 02;
 
     }
 }
